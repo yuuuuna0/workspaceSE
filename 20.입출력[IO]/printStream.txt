@@ -1,0 +1,6 @@
+프린트스트림을 공부합니다.
+3.141592
+힣
+java.lang.Object@15db9742
+true
+---------PrintStream.println()-->console.printStream.txt

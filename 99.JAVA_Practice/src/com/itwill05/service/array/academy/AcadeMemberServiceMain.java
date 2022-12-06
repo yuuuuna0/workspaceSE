@@ -22,9 +22,9 @@ public class AcadeMemberServiceMain {
 		"4.AcademyMember 중에서 영업부서인 AcademyStaff  객체들 배열참조변수반환해줘");
 		System.out.println(
 		"4.AcademyMember 중에서 자바과목인 AcademyGangsa 객체들 배열참조변수반환해줘");
-		System.out.println(academyMemberService.findClass());
+		System.out.println(academyMemberService.findBan());
 		System.out.println(academyMemberService.findDepart());
-		
+		System.out.println(academyMemberService.findSubject());
 		System.out.println("---------------------------------------------");
 		System.out.println(
 				"5.AcademyMember 중에서 자바반인  AcademyStudent객체들 배열참조변수반환해줘");

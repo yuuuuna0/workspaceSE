@@ -15,6 +15,15 @@ public class AcademyMemberService {
 	public static final int Sort_By_Staff=2;
 	public static final int Sort_By_Gangsa=3;
 	
+	public static final String Sort_By_JAVA="자바";
+	public static final String Sort_By_LINUX="리눅스";
+	public static final String Sort_By_IOT="IOT";
+	public static final String Sort_By_PROGRAMMING="프로그래밍";
+	public static final String Sort_By_DB="DB";
+	public static final String Sort_By_OS="OS";
+	public static final String Sort_By_SALES="영업";
+	public static final String Sort_By_PRODUCTION="생산";
+	
 	
 	private AcademyMember[] members;
 
@@ -95,7 +104,7 @@ public class AcademyMemberService {
 		}
 		return academyMember;
 	}
-	public AcademyMember[] findStaff() {
+	private AcademyMember[] findStaff() {
 		int index=0;
 		for (AcademyMember academyMember : members) {
 			if(academyMember instanceof AcademyStaff) index++;
@@ -110,7 +119,7 @@ public class AcademyMemberService {
 		}
 		return academyMember;
 	}
-	public AcademyMember[] findGangsa() {
+	private AcademyMember[] findGangsa() {
 		int index=0;
 		for (AcademyMember academyMember : members) {
 			if(academyMember instanceof AcademyGangsa) index++;
@@ -130,45 +139,40 @@ public class AcademyMemberService {
 	 * 4.AcademyMember 중에서 영업부서인 AcademyStaff   객체들 배열참조변수반환해줘 
 	 * 4.AcademyMember 중에서 자바과목인 AcademyGangsa  객체들 배열참조변수반환해줘
 	 */
-	public AcademyMember[] findBan() {
+	private AcademyMember[] findBan(String ban) {
 		AcademyMember[] student=this.findStudent();
-		AcademyMember[] java=new AcademyMember[student.length];
+		AcademyMember[] tempMember=new AcademyMember[student.length];
 		int a=0;
-		for (int i = 0; i < student.length; i++) {
-			AcademyStudent tempMember=(AcademyStudent)student[i];
-			if(tempMember.getBan().equals("자바")) {
-				java[a]=tempMember;
-				a++;
+		for(int i=0;i<student.length;i++) {
+			if(((AcademyStudent)student[i]).getBan().equals(ban)) {
+				tempMember[a]=student[i];
 			}
 		}
-		return java;
+		return tempMember;
 	}
-	public AcademyMember[] findDepart() {
+	private AcademyMember[] findDepart(String depart) {
 		AcademyMember[] staff=this.findStaff();
-		AcademyMember[] sales=new AcademyMember[staff.length];
+		AcademyMember[] tempMember=new AcademyMember[staff.length];
 		int a=0;
-		for (int i = 0; i < staff.length; i++) {
-			AcademyStaff tempMember=(AcademyStaff)staff[i];
-			if(tempMember.getDepart().equals("영업")) {
-				sales[a]=tempMember;
-				a++;
+		for(int i=0;i<staff.length;i++) {
+			if(((AcademyStaff)staff[i]).getDepart().equals(depart)) {
+				tempMember[a]=staff[i];
 			}
 		}
-		return sales;
+		return tempMember;
 	}
-	public AcademyMember[] findSubject() {
+	private AcademyMember[] findSubject(String subject) {
 		AcademyMember[] gangsa=this.findGangsa();
-		AcademyMember[] java=new AcademyMember[gangsa.length];
+		AcademyMember[] tempMember=new AcademyMember[gangsa.length];
 		int a=0;
-		for (int i = 0; i < gangsa.length; i++) {
-			AcademyGangsa tempMember=(AcademyGangsa)gangsa[i];
-			if(tempMember.getSubject().equals("자바")) {
-				java[a]=tempMember;
-				a++;
+		for(int i=0;i<gangsa.length;i++) {
+			if(((AcademyGangsa)gangsa[i]).getSubject().equals(subject)) {
+				tempMember[a]=gangsa[i];
 			}
 		}
-		return java;
+		return tempMember;
 	}
+
 
 	// sort처럼 상수 만들어서 하위 클래스가 형성되어도 메소드가 추후에 수정되지 않도록
 	/*
@@ -176,8 +180,17 @@ public class AcademyMemberService {
 	 * 5.AcademyMember 중에서 영업부서인 AcademyStaff   객체들 배열참조변수반환해줘[OPTION] 
 	 * 5.AcademyMember 중에서 자바과목인 AcademyGangsa  객체들 배열참조변수반환해줘[OPTION]
 	 */
-	
-	
+	public AcademyMember[] findMember(int no, String str) {
+		AcademyMember[] findMember=null;
+		if(no==1) {
+			findMember=this.findBan(str);
+		} else if(no==2) {
+			findMember=this.findDepart(str);
+		} else if(no==3) {
+			findMember=this.findSubject(str);
+		}
+		return findMember;
+	}
 	
 	
 

@@ -22,7 +22,7 @@ public class StudentArrayListMain {
 		/*
 		 * 0.학생두명추가
 		 */
-		studentList.add(new Student(10,"JUNG",35,89,60));S
+		studentList.add(new Student(10,"JUNG",35,89,60));
 		studentList.add(new Student(11,"CHOI",95,82,68));
 		/*
 		 * 1. 전체학생총점,평균,평점계산

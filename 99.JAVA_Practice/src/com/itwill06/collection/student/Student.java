@@ -21,7 +21,7 @@ public class Student {
 	private int tot;
 	private double avg;
 	private char grade;
-	private int rank = 1;
+	private int rank = 0;
 
 	/*
 	 * <<생성자메쏘드 선언[오버로딩]>> - 인자 0개짜리 생성자(기본생성자선언) - 인자 5개짜리(번호 이름 국어 영어 수학) 생성자선언

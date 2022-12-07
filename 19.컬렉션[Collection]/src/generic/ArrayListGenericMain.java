@@ -1,6 +1,7 @@
 package generic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import nogeneric.Account;
 
@@ -72,11 +73,26 @@ public class ArrayListGenericMain {
 		}
 		
 		System.out.println("*************4. 계좌번호 4444번 계좌 한 개 삭제*************");
+		/***************enhanced for문 사용시 뭔가 좀 이상함 -> 더 찾아보기
 		for (Account account : accountList) {
 			if(account.getNo()==4444) {
 				accountList.remove(account);
+				
+			}
+			account.print();
+		}
+		*************************/
+		Iterator<Account> accountIterator=accountList.iterator();
+		while(accountIterator.hasNext()) {
+			Account account=accountIterator.next();
+			if(account.getNo()==4444) {
+				accountList.remove(account);
+				
 			}
 		}
+		System.out.println(accountList);
+		
+		System.out.println("-------------------------------------------------------");
 		for (int i = 0; i < accountList.size(); i++) {
 			accountList.get(i).print();
 		}

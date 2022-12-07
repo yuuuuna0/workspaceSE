@@ -2,6 +2,7 @@ package com.itwill06.collection.student;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class StudentArrayListMain {
 
@@ -35,11 +36,10 @@ public class StudentArrayListMain {
 		 * 2. 전체학생 총점으로 석차계산
 		 */
 		System.out.println("2. 전체학생 총점으로 석차계산");
-		Student tempList=new Student();
-		for (Student student : studentList) {
-			for(int i=0;i<studentList.size()-1;i++) {
-				if(studentList.get(i).getTot()>studentList.get(i+1).getTot()) {
-					studentList.get(i).getRank()++;
+		for(int i=0;i<studentList.size();i++) {
+			for (int j=0;j<studentList.size();j++) {
+				if(studentList.get(i).getTot()<studentList.get(j).getTot()) {
+					studentList.get(i).setRank((studentList.get(i).getRank())+1);
 				}
 			}
 		}
@@ -48,30 +48,79 @@ public class StudentArrayListMain {
 		 */
 		System.out.println("3. 전체학생출력 (enhanced for)");
 		Student.headerPrint();
+		for (Student student : studentList) {
+			student.print();
+		}
 		/*
 		 * 4. 번호3번 학생한명 출력
 		 */
 		System.out.println("4.번호3번 학생한명 출력  ");
+		for (Student student : studentList) {
+			if(student.getNo()==3) {
+				student.print();
+				break;
+			}
+		}
 		/*
 		 * 5. 학점A인 학생들 출력
 		 */
 		System.out.println("5. 학점A인 학생들 출력");
+		for (Student student : studentList) {
+			if(student.getGrade()=='A'){
+				student.print();
+			}	
+		}
+		
 		/*
 		 6.이름이 KIM인학생들 출력
 		 */
 		System.out.println("6.이름이 KIM인학생들 출력");
+		for (Student student : studentList) {
+			if(student.getName().equals("KIM")) {
+				student.print();
+			}
+		}
 		/*
 		 * 7.번호3번학생한명삭제
 		 */
 		System.out.println("7.번호3번학생삭제");
+		for (Student student : studentList) {
+			if(student.getNo()==3) {
+				studentList.remove(student);
+				break;
+			}
+		}
 		/*
 		 * 8.이름KIM인 학생들삭제
 		 */
 		System.out.println("8.이름KIM인 학생들삭제");
+		for (int i = 0; i < studentList.size(); i++) {
+			if(studentList.get(i).getName().equals("KIM")) {
+				studentList.remove(studentList.get(i));
+				i--;
+			}
+		}
+	
+		/**************enhanced for문 사용할 경우의 매커니즘 -> StudentList를 iterator 넣어주는 작업이 매번 되는게 아니라 시작 시 한번만 들어가기 때문에 삭제 할 경우 처음 대입한 것과 삭제한 것의 차이가 생김
+		Iterator<Student> iterator=studentList.iterator();
+		
+		while(iterator.hasNext()) {
+			Student student=iterator.next();
+			if(student.getName().equals("KIM")) {
+				studentList.remove(student);
+			}
+		}
+		**************************************/
 		/*
 		 * 9.평점 F 인 학생들삭제
 		 */
 		System.out.println("9.평점 F 인 학생들삭제");
+		for (int i = 0; i < studentList.size(); i++) {
+			if(studentList.get(i).getRank()=='F') {
+				studentList.remove(i);
+				i--;
+			}
+		}
 		/******************안해도됨******************************/
 		/*
 		 * 10. 학생총점으로 오름차순정렬

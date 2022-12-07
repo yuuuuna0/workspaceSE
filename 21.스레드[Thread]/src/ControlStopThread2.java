@@ -13,8 +13,8 @@ public class ControlStopThread2 extends Thread{
 
 	@Override
 	public void run() {
-		while(isPlay) {			//isPlay가 false로 지정되어도 5번까지 출력 후 조건문을 빠져나오게 된다.
-			try {
+		while(isPlay) {			//isPlay가 false로 지정되어도 5번까지 출력 후 조건문을 빠져나오게 된다._1~5까지가 한 세트 ==> 이러한 작업을 동기화작업이라 한다.
+			try {				
 				System.out.println("---------------------");
 				System.out.println("1. game move!");
 				Thread.sleep((int)(Math.random()*1000)+1);

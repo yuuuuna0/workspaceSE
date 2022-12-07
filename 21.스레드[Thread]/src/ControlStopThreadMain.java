@@ -12,7 +12,7 @@ public class ControlStopThreadMain {
 		ControlStopThread2 cst2=new ControlStopThread2();
 		cst2.start();
 		Thread.sleep(5000);
-		//cst2.stop();
+		//cst2.stop();0
 		cst2.setPlay(false);
 		Thread.sleep(100000);
 		System.out.println("9. main thread jvm return");

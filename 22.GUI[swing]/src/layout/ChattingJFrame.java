@@ -74,8 +74,6 @@ public class ChattingJFrame extends JFrame {
 		JTextArea textArea = new JTextArea();
 		contentPane.add(textArea, BorderLayout.CENTER);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		contentPane.add(lblNewLabel_1, BorderLayout.WEST);
 	}
 
 }

@@ -2,10 +2,11 @@ package com.itwill06.collection.student;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class StudentArrayListMain {
-
+	
 	public static void main(String[] args) {
 		/*
 		 * 0.학생ArrayList객체생성초기화
@@ -125,12 +126,38 @@ public class StudentArrayListMain {
 		/*
 		 * 10. 학생총점으로 오름차순정렬
 		 */
+		//case1
 		System.out.println("10. 학생총점으로 내림차순정렬");
+		for (int i = 0; i < studentList.size()-1; i++) {
+			for (int j = 0; j < studentList.size()-1; j++) {
+				if(studentList.get(j).getTot()<studentList.get(j+1).getTot()) {
+					//Collections.swap(studentList, j, j+1);
+					Student tempStudent=studentList.get(j);
+					studentList.remove(j);
+					studentList.add(j+1,tempStudent);
+					
+				}
+			}
+		}
+		
 		/*
 		  11. 학생이름순으로 오름차순정렬
 		 */
 		System.out.println("11.학생이름순으로 오름차순정렬");
+		//case1
+		for (int i = 0; i < studentList.size()-1; i++) {
+			for (int j = 0; j < studentList.size()-1; j++) {
+				if(studentList.get(j).getName().compareTo(studentList.get(j+1).getName())>0) {
+					//Collections.swap(studentList, j, j+1);
+					Student tempStudent=studentList.get(j);
+					studentList.remove(j);
+					studentList.add(j+1,tempStudent);
+				}
+			}
+		}
 		/********************************************************/
 	}
+	
+
 
 }

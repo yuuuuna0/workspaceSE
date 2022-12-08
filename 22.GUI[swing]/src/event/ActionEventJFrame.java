@@ -19,11 +19,11 @@ import javax.swing.JPanel;
 				addXXListener()함수를 통해 연결을 시켜준다.  
 				XX부분은 해당 컴포넌트에 붙일 수 있는 리스너 이름을 의미한다.
 	 
-	  ex>버튼에서발생하는 ActionEvent를 처리할 Handler(Listener)객체생성
+	  ex>버튼에서발생하는 ActionEvent를 처리할 Handler(ActionListener 구현)객체생성
 	  
 	  예를 들어 버튼에 ActionEvent을 처리하기 위하여 
 	  버튼에다가 addActionListener를 붙이는 경우이다.
-	  ex> 버튼객체.addActionListener(핸들러객체);
+	  ex> 버튼객체.addActionListener(ActionListener 구현한 핸들러객체);
 */
 public class ActionEventJFrame extends JFrame {
 	public JPanel contentPane;

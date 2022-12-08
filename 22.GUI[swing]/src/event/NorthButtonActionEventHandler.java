@@ -12,6 +12,10 @@ import javax.swing.JButton;
  */
 public class NorthButtonActionEventHandler implements ActionListener{
 	int clickCount=0;
+	public ActionEventJFrame frame;
+	public NorthButtonActionEventHandler(ActionEventJFrame frame) {
+		this.frame=frame;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("실행스레드 이름: "+Thread.currentThread().getName());
@@ -23,7 +27,7 @@ public class NorthButtonActionEventHandler implements ActionListener{
 		clickCount++;
 		source.setText("이벤트소스[North] click");
 		source.setBackground(Color.RED);
-		source.setBackground(Color.YELLOW);
+		source.setForeground(Color.YELLOW);
 		System.out.println("north button click!!");
 		
 		/*
@@ -31,7 +35,11 @@ public class NorthButtonActionEventHandler implements ActionListener{
 		 * contentPane(프레임의 멤버필드)의 배경색 변경
 		 * 
 		 */
-		
+		frame.setTitle("click" +clickCount);
+		int r=(int)(Math.random()*256);
+		int g=(int)(Math.random()*256);
+		int b=(int)(Math.random()*256);
+		frame.contentPane.setBackground(new Color(r,g,b));
 	}
 	
 	

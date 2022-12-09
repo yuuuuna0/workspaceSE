@@ -48,18 +48,35 @@ public class ActionEventJFrame extends JFrame {
 		westBtn = new JButton("이벤트소스[West]");
 		
 		/*****이벤트 핸들러 객체 등록******/
+		/** 1. 외부 클래스 **/
 		NorthButtonActionEventHandler handler=new NorthButtonActionEventHandler(this);
 		northBtn.addActionListener(handler);
+		/** 2. 멤버 내부 클래스 **/
 		southBtn.addActionListener(new SouthButtonActionEventHandler());
+		/** 3. 익명 클래스 **/
+		ActionListener westButtonHandler = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("west button click!!");
+			}
+		};
+		westBtn.addActionListener(westButtonHandler);
 		
+		eastBtn.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("east button click!!");
+			}
+		});
 		
 		contentPane.add(northBtn,BorderLayout.NORTH);
 		contentPane.add(southBtn,BorderLayout.SOUTH);
-		/*
+		
 		contentPane.add(eastBtn,BorderLayout.EAST);
 		contentPane.add(westBtn,BorderLayout.WEST);
-		*/
-		this.setSize(300,400);
+		
+		this.setSize(400,400);
 		this.setVisible(true);
 		
 	}

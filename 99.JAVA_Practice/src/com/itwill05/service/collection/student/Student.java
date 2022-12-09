@@ -167,6 +167,4 @@ public class Student {
 		this.rank = rank;
 	}
 
-
-	}
 }

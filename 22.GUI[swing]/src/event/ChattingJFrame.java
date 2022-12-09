@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ChattingJFrame extends JFrame {
 
@@ -42,7 +44,14 @@ public class ChattingJFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public ChattingJFrame() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.out.println("windowClosing");
+				System.exit(0);		//Terminates the currently running Java Virtual Machine.
+			}
+		});
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,14 +72,22 @@ public class ChattingJFrame extends JFrame {
 		contentPane.add(panel_1, BorderLayout.SOUTH);
 		
 		chatTF = new JTextField();
+		chatTF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("TextField enter key");
+				/*
+				 * frame의 TextField와 TextArea에 접근해야 함
+				 */
+				String chatStr=chatTF.getText();
+				chatTF.setText("");
+				chatTA.append(chatStr+"\n");
+				chatTF.requestFocus();
+			}
+		});
 		panel_1.add(chatTF);
 		chatTF.setColumns(30);
 		
 		sendBtn = new JButton("전송");
-		sendBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		panel_1.add(sendBtn);
 		
 		chatTA = new JTextArea();

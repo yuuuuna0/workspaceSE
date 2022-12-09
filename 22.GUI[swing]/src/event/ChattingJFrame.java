@@ -74,6 +74,7 @@ public class ChattingJFrame extends JFrame {
 		panel_1.add(sendBtn);
 		
 		chatTA = new JTextArea();
+		chatTA.setEditable(false);
 		chatTA.setText("유나: 아싸 금요일\r\n");
 		contentPane.add(chatTA, BorderLayout.CENTER);
 		
@@ -81,6 +82,25 @@ public class ChattingJFrame extends JFrame {
 		ChatSendButtonActionEventHandler handler=new ChatSendButtonActionEventHandler();
 		sendBtn.addActionListener(handler);
 		
+	}	//----->여기까지 생성자
+	
+	/**********Inner class*************/
+	public class ChatSendButtonActionEventHandler implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("send button click");
+			/*
+			 * frame의 TextField와 TextArea에 접근해야 함
+			 */
+			String chatStr=chatTF.getText();
+			chatTF.setText("");
+			chatTA.append(chatStr+"\n");
+			chatTF.requestFocus();
+			
+		}
+
 	}
+	
 
 }

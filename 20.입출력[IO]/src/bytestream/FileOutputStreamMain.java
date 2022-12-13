@@ -15,10 +15,11 @@ public class FileOutputStreamMain {
 		
 		FileOutputStream fos = new FileOutputStream(new File("src/bytestream/fileOut.dat"),true);
 		/*
-		 * public abstract void write(int b)throws IOException; - Writes the specified
-		 * byte to this output stream. - The general contract for write is that one byte
-		 * is written to the output stream. - The byte to be written is the eight
-		 * low-order bits of the argument b. The 24 high-order bits of b are ignored
+		 * public abstract void write(int b)throws IOException; 
+		 * 		- Writes the specified byte to this output stream. 
+		 * 		- The general contract for write is that one byte is written to the output stream. 
+		 * 		- The byte to be written is the eight low-order bits of the argument 
+		 * 			b. The 24 high-order bits of b are ignored
 		 */
 		/*
 		 * 65 		-->00000000000000000000000001000001 

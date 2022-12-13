@@ -1,6 +1,9 @@
 package com.itwill06.collection.car;
 
+import java.awt.RenderingHints.Key;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class CarHashMapMain {
 
@@ -23,8 +26,27 @@ public class CarHashMapMain {
 		 * 1.차량객체생성
 		 * 2.carMap저장
 		 */
+		carMap.put("2344",c1);
+		carMap.put("4566",c2);
+		carMap.put("4567",c3);
+		carMap.put("2389",c4);
+		carMap.put("3908",c5);
+		carMap.put("7891",c6);
+		carMap.put("5656",c7);
+		carMap.put("7789",c8);
+		carMap.put("4690",c9);
+		
 		System.out.println("2.차량번호 7789번  차한대 정보출력");
+		System.out.println(carMap.get("7789"));
+		
 		System.out.println("3.입차시간 8시이후 차량여러대 찾아서 정보출력");
+		Set<Entry<String,Car>> entrySet=carMap.entrySet();
+		for (Entry<String,Car> entry : entrySet) {
+			if(entry.getValue().getInTime()>8) {
+				entry.getValue().print();
+			}
+		}
+		
 		System.out.println("4.2389번차량 12시 출차");
 		/*
 		 * 1. 2389번차량찾기
@@ -32,8 +54,17 @@ public class CarHashMapMain {
 		 * 3. 영수증출력
 		 * 4. 2389번차량 주차장에서 차량삭제
 		 */
-		System.out.println("5. 2389번차량 출차후전체 차량출력");
+		Car chulchaCar=carMap.get("2389");
+		chulchaCar.setOutTime(12);
+		chulchaCar.calculateFee();
+		chulchaCar.headerPrint();
+		chulchaCar.print();
+		carMap.remove("2389");
 		
+		System.out.println("5. 2389번차량 출차후전체 차량출력");
+		for (Entry<String, Car> entry : entrySet) {
+			entry.getValue().print();
+		}
 		
 		
 		

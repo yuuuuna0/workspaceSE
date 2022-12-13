@@ -10,6 +10,9 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import chat.common.ChatProtocol;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
@@ -149,19 +152,21 @@ public class ChatServerFrame extends JFrame {
 		public void run() {
 			try {
 				while(true) {
-					System.out.println("가. ServerClientThread: "+id+"로부터 테이터를 읽기 위해 스레드 대기");
+					//System.out.println("가. ServerClientThread: "+id+"로부터 테이터를 읽기 위해 스레드 대기");
 					setLog("가. ServerClientThread "+id+"로부터 테이터를 읽기 위해 스레드 대기");
 					String readStr=in.readLine();
-					System.out.println("나. ServerClientThread: "+id+"로부터 읽은 데이터 ==> "+readStr);
-					clientService.sendBroadcasting(readStr);
-					System.out.println("다. ServerClientThread: 연결된 모든 클라이언트에 읽은 데이터 전송");
+					//System.out.println("나. ServerClientThread: "+id+"로부터 읽은 데이터 ==> "+readStr);
+					setLog("나. ServerClientThread: "+id+"로부터 읽은 데이터 ==> "+readStr);
+					clientService.sendBroadcasting(ChatProtocol.PLAIN_MSG+"#"+readStr);
+					//System.out.println("다. ServerClientThread: 연결된 모든 클라이언트에 읽은 데이터 전송");
+					setLog("다. ServerClientThread: 연결된 모든 클라이언트에 읽은 데이터 전송");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				try {
 					clientService.removeClient(this);
 				} catch (Exception e1) {
-					e1.printStackTrace();
+					System.err.println(e1.getMessage());
 				}
 			}
 
@@ -179,11 +184,24 @@ public class ChatServerFrame extends JFrame {
 		 * 클라이언트객체 보관리스트
 		 */
 		private List<ServerClientThread> clientList=new ArrayList<ServerClientThread>();
+		private String makeClientList() {
+			String clientListStr="";
+			for (ServerClientThread serverClientThread : clientList) {
+				clientListStr += serverClientThread.getUserId()+"%";
+			}
+			clientListStr.substring(0, clientListStr.length()-1);
+			return clientListStr;
+		}
+		
+		
 		/*
 		 * 클라이언트객체추가
 		 */
 		public void addClient(ServerClientThread newClient) throws Exception {
 			clientList.add(newClient);
+			
+			sendBroadcasting(ChatProtocol.PLAIN_MSG+"#"+newClient.getUserId()+"님 입장");
+			sendBroadcasting(ChatProtocol.LIST_MSG+"#"+makeClientList());
 			setLog("A.ServerClientService: "+newClient.getUserId()+"님 입장");
 			setLog("B.ServerClientService: 현재 접속자 수 "+clientList.size()+"명");
 			
@@ -194,6 +212,8 @@ public class ChatServerFrame extends JFrame {
 		 */
 		public void removeClient(ServerClientThread removeClient) throws Exception {
 			clientList.remove(removeClient);
+			sendBroadcasting(ChatProtocol.PLAIN_MSG+"#"+removeClient.getUserId()+"님 퇴장");
+			sendBroadcasting(ChatProtocol.LIST_MSG+"#"+makeClientList());
 			setLog("A.ServerClientService: "+removeClient.getUserId()+"님 퇴장");
 			setLog("B.ServerClientService: 현재 접속자 수 "+clientList.size()+"명");
 

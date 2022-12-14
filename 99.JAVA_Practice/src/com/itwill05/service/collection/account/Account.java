@@ -1,9 +1,9 @@
-package com.itwill06.collection.account;
+package com.itwill05.service.collection.account;
 
 /*
  * 계좌객체를 생성하기위한 클래스(틀,타입)
  */
-public class Account {
+public class Account implements Comparable{
 	/*
 	 * 1. 속성[멤버필드(변수)]
 	 */
@@ -85,6 +85,12 @@ public class Account {
 
 	public void setIyul(double iyul) {
 		this.iyul = iyul;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

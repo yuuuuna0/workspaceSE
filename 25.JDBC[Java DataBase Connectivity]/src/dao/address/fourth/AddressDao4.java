@@ -14,7 +14,7 @@ public class AddressDao4 {
 	public AddressDao4() {
 	}
 
-	public void insert(Address newAddress) throws Exception {
+	public int insert(Address newAddress) throws Exception {
 		String driverClass="oracle.jdbc.OracleDriver";
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String user="scott";
@@ -27,8 +27,9 @@ public class AddressDao4 {
 		System.out.println(">>insert row count: "+rowCount+"행 insert");
 		stmt.close();
 		con.close();
+		return rowCount;
 	}
-	public void update(Address updateAddress) throws Exception {
+	public int update(Address updateAddress) throws Exception {
 		String driverClass="oracle.jdbc.OracleDriver";
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String user="scott";
@@ -45,8 +46,9 @@ public class AddressDao4 {
 		
 		stmt.close();
 		con.close();
+		return rowCount;
 	}
-	public void delete(int no) throws Exception {
+	public int delete(int no) throws Exception {
 		String driverClass="oracle.jdbc.OracleDriver";
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String user="scott";
@@ -59,13 +61,17 @@ public class AddressDao4 {
 		System.out.println(">> "+rowCount+" 행 delete");
 		stmt.close();
 		con.close();
+		return rowCount;
 	}
-	public void findByPrimaryKey(int no) throws Exception {
+	public Address findByPrimaryKey(int no) throws Exception {
 		String driverClass="oracle.jdbc.OracleDriver";
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String user="scott";
 		String password="tiger";
 		String selectSql="select no,name,phone,address from address where no="+no;
+		
+		Address findAddress=null;
+		
 		Class.forName(driverClass);
 		Connection con=DriverManager.getConnection(url,user,password);
 		Statement stmt=con.createStatement();
@@ -75,14 +81,16 @@ public class AddressDao4 {
 			String name=rs.getString("name");
 			String phone=rs.getString("phone");
 			String address=rs.getString("address");
-			System.out.println(n+"\t"+name+"\t"+phone+"\t"+address);
+			findAddress=new Address(no,name,phone,address);
 		} else {
-			System.out.println("조건에 만족하는 주소록 존재안함");
+			//System.out.println("조건에 만족하는 주소록 존재안함");
+			findAddress=null;
 		}
 		
 		rs.close();
 		stmt.close();
 		con.close();
+		return findAddress;
 	}
 	public void findAll() throws Exception {
 		String driverClass="oracle.jdbc.OracleDriver";
@@ -100,7 +108,7 @@ public class AddressDao4 {
 				String name=rs.getString("name");
 				String phone=rs.getString("phone");
 				String address=rs.getString("address");
-				System.out.println(no+"\t"+name+"\t"+phone+"\t"+address);
+				
 			} while(rs.next());
 		} else {
 			System.out.println("조건에 만족하는 주소록 존재안함");

@@ -40,14 +40,14 @@ public class JDBCFlowMain {
 		 * 4. SQL문 전송
 		 * 5. ResultSet 객체얻기(select)
 		 *  ---------------------------------
-		DEPTNO    DNAME        	LOC
-		--------    -------------------------
-		(cursor) ▶ BEFORE FIRST 영역
-		10	 	ACCOUNTING		NEW YORK
-		20		RESEARCH		DALLAS
-		30		SALES			CHICAGO
-		40		OPERATIONS		BOSTON
-		AFTER LAST  영역   
+			DEPTNO    DNAME        	LOC
+			--------    -------------------------
+ (cursor) ▶ BEFORE FIRST 영역
+			10	 	ACCOUNTING		NEW YORK
+			20		RESEARCH		DALLAS
+			30		SALES			CHICAGO
+			40		OPERATIONS		BOSTON
+			AFTER LAST  영역   
 		 */
 		ResultSet rs=stmt.executeQuery(selectSql);
 		System.out.println("4,5. ResultSet객체얻기(select문 실행 결과): "+rs);

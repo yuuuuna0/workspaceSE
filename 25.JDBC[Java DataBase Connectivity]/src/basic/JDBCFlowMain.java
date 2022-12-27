@@ -52,6 +52,7 @@ public class JDBCFlowMain {
 		ResultSet rs=stmt.executeQuery(selectSql);
 		System.out.println("4,5. ResultSet객체얻기(select문 실행 결과): "+rs);
 		while(rs.next()){
+			//rs.nest는 null일 수 없다. 데이터가 있으면 true, 데이터가 없으면(Before first, After last) false
 			int deptno=rs.getInt("deptno");
 			String dname=rs.getString("dname");
 			String loc=rs.getString("loc");

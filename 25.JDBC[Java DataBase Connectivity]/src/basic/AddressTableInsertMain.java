@@ -36,8 +36,8 @@ public class AddressTableInsertMain {
 			sql - an SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE; 
 					or an SQL statement that returns nothing, such as a DDL statement.
 			Returns:
-			either (1) the row count for SQL Data Manipulation Language (DML) statements 
-				or (2) 0 for SQL statements that return nothing	
+			either (1) the row count for SQL Data Manipulation Language (DML) statements //DML문일 경우 영향 받은 행의 수를 반환
+				or (2) 0 for SQL statements that return nothing							 //DDL문의 경우 0을 반환
 			-DML 중 Select만 executeQuery, 나머지 3개는 executeUpdate
 		 */
 		System.out.println(">>insert row count: "+rowCount+"행 insert");

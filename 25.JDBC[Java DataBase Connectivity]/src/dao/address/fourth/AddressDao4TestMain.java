@@ -1,5 +1,7 @@
 package dao.address.fourth;
 
+import java.util.List;
+
 public class AddressDao4TestMain {
 
 	public static void main(String[] args) throws Exception{
@@ -31,7 +33,8 @@ public class AddressDao4TestMain {
 		System.out.println(">> "+addressDao4.findByPrimaryKey(4));
 		System.out.println(">> "+addressDao4.findByPrimaryKey(5));
 		System.out.println("5. findAll");
-		addressDao4.findAll();
+		List<Address> addressList=addressDao4.findAll();
+		System.out.println(addressList);
 	}
 
 }

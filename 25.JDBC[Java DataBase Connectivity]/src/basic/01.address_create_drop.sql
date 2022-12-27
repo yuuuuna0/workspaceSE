@@ -1,3 +1,5 @@
+//ddl이나 sql이나 확장자 바꿔도 영향 X
+
 DROP TABLE address CASCADE CONSTRAINTS;
 
 CREATE TABLE address(

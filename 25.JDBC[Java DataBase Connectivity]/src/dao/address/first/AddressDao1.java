@@ -10,7 +10,7 @@ import java.sql.Statement;
  * 		-address테이블에 CRUD(Create,Read,Update,Delete)작업을 하는 단위메쏘드를 가지고 있는 클래스
  * 
  */
-public class AddressDao1 {
+public class AddressDao1  {
 	public AddressDao1() {
 	}
 

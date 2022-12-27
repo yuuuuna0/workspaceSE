@@ -28,13 +28,12 @@ public class Member {
 	private String m_name;
 	private String m_address;
 	private int m_age;
-	private char m_married;
+	private String m_married;
 	private Date m_regdate;
 	public Member() {
-		// TODO Auto-generated constructor stub
 	}
 	
-	public Member(String m_id, String m_password, String m_name, String m_address, int m_age, char m_married,
+	public Member(String m_id, String m_password, String m_name, String m_address, int m_age, String m_married,
 			Date m_regdate) {
 		super();
 		this.m_id = m_id;
@@ -61,7 +60,7 @@ public class Member {
 	public int getM_age() {
 		return m_age;
 	}
-	public char getM_married() {
+	public String getM_married() {
 		return m_married;
 	}
 	public Date getM_regdate() {
@@ -82,7 +81,7 @@ public class Member {
 	public void setM_age(int m_age) {
 		this.m_age = m_age;
 	}
-	public void setM_married(char m_married) {
+	public void setM_married(String m_married) {
 		this.m_married = m_married;
 	}
 	public void setM_regdate(Date m_regdate) {

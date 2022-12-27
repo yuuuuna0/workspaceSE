@@ -22,16 +22,17 @@ public class MemberDao {
 	}
 
 	public void update() throws Exception {
-
+		//update가 여러개면 overloading해서 쓴다.
 	}
 
-	public int delete() throws Exception {
-
-		return 0;
+	public void delete() throws Exception {
+		//delete가 여러개면 overloading해서 쓴다.
+		//영향받은 행의 수를 반환
+		//pk delete
 	}
 
 	public void findByPrimaryKey() throws Exception {
-
+		//pk find
 	}
 
 	public void findAll() throws Exception {

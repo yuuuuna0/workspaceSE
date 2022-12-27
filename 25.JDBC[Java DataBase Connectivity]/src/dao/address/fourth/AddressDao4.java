@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Dao(Data Access Object) 클래스
@@ -92,12 +94,15 @@ public class AddressDao4 {
 		con.close();
 		return findAddress;
 	}
-	public void findAll() throws Exception {
+	public List<Address> findAll() throws Exception {
 		String driverClass="oracle.jdbc.OracleDriver";
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String user="scott";
 		String password="tiger";
 		String selectSql="select no,name,phone,address from address";
+		
+		List<Address> addressList=new ArrayList<Address>();
+		
 		Class.forName(driverClass);
 		Connection con=DriverManager.getConnection(url,user,password);
 		Statement stmt=con.createStatement();
@@ -107,15 +112,17 @@ public class AddressDao4 {
 				int no=rs.getInt("no");
 				String name=rs.getString("name");
 				String phone=rs.getString("phone");
-				String address=rs.getString("address");
-				
+				String addr=rs.getString("address");
+				Address address=new Address(no,name,phone,addr);
+				addressList.add(address);
 			} while(rs.next());
 		} else {
-			System.out.println("조건에 만족하는 주소록 존재안함");
+			//System.out.println("조건에 만족하는 주소록 존재안함");
 		}
 		
 		rs.close();
 		stmt.close();
 		con.close();
+		return addressList;
 	}
 }

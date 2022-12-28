@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/basic/01.address_create_drop.sql=MS949
 encoding//src/basic/01.address_insert_update_delete_select.sql=UTF-8
-encoding//src/dao/member/member.ddl=MS949
+encoding//src/dao/guest/guest_table_create_drop.sql=MS949
+encoding//src/dao/member/member_create_drop.sql=MS949
 encoding/<project>=x-windows-949

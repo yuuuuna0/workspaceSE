@@ -12,7 +12,8 @@ public class MemberDaoTestMain {
 		Member newMember=new Member("aaaa","aaaa","정유나","서울시 광진구",30,"F",null);
 		memberDao.insert(newMember);
 		System.out.println("2.update   --> ");
-		memberDao.update(new Member("bbbb","b1b1","정유가","서울시 광진구",30,"F",null));
+		Member updateMember=new Member("bbbb","b1b1","정유가","서울시 광진구",30,"F",null);
+		memberDao.update(updateMember);
 		System.out.println("3.selectById-> ");
 		Member selectById= memberDao.findByPrimaryKey("'cccc'");
 		if(selectById !=null) {

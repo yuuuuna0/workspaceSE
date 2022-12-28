@@ -52,7 +52,7 @@ public class MemberDao {
 		//update가 여러개면 overloading해서 쓴다.
 		String updateSQL="update member set m_password='"+updateMember.getM_password()+"',m_name='"+updateMember.getM_name()
 						+"',m_address='"+updateMember.getM_address()+"',m_age="+updateMember.getM_age()+",m_married='"+updateMember.getM_married()
-						+"',m_regdate="+updateMember.getM_regdate()+" where m_id="+updateMember.getM_id();
+						+"',m_regdate="+updateMember.getM_regdate()+" where m_id='"+updateMember.getM_id()+"'";
 		
 		Class.forName(driverClass);
 		Connection con=DriverManager.getConnection(url, user, password);

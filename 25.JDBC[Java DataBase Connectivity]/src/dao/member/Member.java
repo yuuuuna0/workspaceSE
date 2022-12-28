@@ -91,7 +91,7 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [m_id=" + m_id + ", m_password=" + m_password + ", m_name=" + m_name + ", m_address=" + m_address
-				+ ", m_age=" + m_age + ", m_married=" + m_married + ", m_regdate=" + m_regdate + "]";
+				+ ", m_age=" + m_age + ", m_married=" + m_married + ", m_regdate=" + m_regdate + "]\n";
 	}
 	
 	

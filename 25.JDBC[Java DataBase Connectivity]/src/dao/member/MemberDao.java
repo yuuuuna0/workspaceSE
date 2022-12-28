@@ -40,40 +40,42 @@ public class MemberDao {
 		Class.forName(driverClass);
 		Connection con=DriverManager.getConnection(url, user, password);
 		Statement stmt=con.createStatement();
-		stmt.executeUpdate(insertSQL);
+		int rowCount=stmt.executeUpdate(insertSQL);
+		System.out.println(">> "+rowCount+"행 추가");
 		
 		stmt.close();
 		con.close();
 		return newmember;
 	}
 	
-	public int update(String m_id) throws Exception {
+	public Member update(Member updateMember) throws Exception {
 		//update가 여러개면 overloading해서 쓴다.
-		Member updateMember=this.findByPrimaryKey(m_id);
 		String updateSQL="update member set m_password='"+updateMember.getM_password()+"',m_name='"+updateMember.getM_name()
 						+"',m_address='"+updateMember.getM_address()+"',m_age="+updateMember.getM_age()+",m_married='"+updateMember.getM_married()
-						+"',m_regdate="+updateMember.getM_regdate()+" where m_id='"+updateMember.getM_id()+"'";
+						+"',m_regdate="+updateMember.getM_regdate()+" where m_id="+updateMember.getM_id();
 		
 		Class.forName(driverClass);
 		Connection con=DriverManager.getConnection(url, user, password);
 		Statement stmt=con.createStatement();
 		int rowCount=stmt.executeUpdate(updateSQL);
+		System.out.println(">> "+rowCount+"행 업데이트");
 		
 		stmt.close();
 		con.close();
-		return rowCount;
+		return updateMember;
 	}
 	
 	public int delete(String m_id) throws Exception {
 		//delete가 여러개면 overloading해서 쓴다.
 		//영향받은 행의 수를 반환
 		//pk delete
-		String deleteSQL="delete from member where m_id="+m_id+"";
+		String deleteSQL="delete from member where m_id="+m_id;
 		
 		Class.forName(driverClass);
 		Connection con=DriverManager.getConnection(url, user, password);
 		Statement stmt=con.createStatement();
 		int rowCount=stmt.executeUpdate(deleteSQL);
+		System.out.println(">> "+rowCount+"행 삭제");
 		
 		stmt.close();
 		con.close();
@@ -82,7 +84,7 @@ public class MemberDao {
 
 	public Member findByPrimaryKey(String m_id) throws Exception {
 		//pk find
-		String findSQL="select m_id,m_password,m_name,m_address,m_age,m_married,m_regdate from member where m_id='"+m_id+"'";
+		String findSQL="select m_id,m_password,m_name,m_address,m_age,m_married,m_regdate from member where m_id="+m_id;
 	
 		Member findMember=null;
 		
@@ -97,7 +99,7 @@ public class MemberDao {
 			String address=rs.getString("m_address");
 			int age=rs.getInt("m_age");
 			String married=rs.getString("m_married");
-			Date regdate=rs.getDate("m_id");
+			Date regdate=rs.getDate("m_regdate");
 			
 			findMember=new Member(id,password,name,address,age,married,regdate);
 		}
@@ -123,8 +125,8 @@ public class MemberDao {
 				String name=rs.getString("m_name");
 				String address=rs.getString("m_address");
 				int age=rs.getInt("m_age");
-				String married=rs.getString("m_married");		//getChar 대신 쓸 수 있는 것?
-				Date regdate=rs.getDate("m_id");
+				String married=rs.getString("m_married");
+				Date regdate=rs.getDate("m_regdate");
 				Member member=new Member(id,password,name,address,age,married,regdate);
 				memberList.add(member);
 			} while(rs.next());

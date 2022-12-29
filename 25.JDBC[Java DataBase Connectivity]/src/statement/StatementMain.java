@@ -29,8 +29,7 @@ public class StatementMain {
 		 * stmt.setMaxRows(0); --> 행의 수 제한 없음(default)
 		 */
 		System.out.println("--------------------stmt.setMaxRow(3)-------------------");
-		stmt.setMaxRows(0);
-		System.out.println("--------------------stmt.executeQuery-------------------");
+		stmt.setMaxRows(3);
 		/*
 		  이름       널?       유형           
 		-------- -------- ------------ 
@@ -43,6 +42,7 @@ public class StatementMain {
 		COMM              NUMBER(7,2)  
 		DEPTNO            NUMBER(2) 
 		 */
+		System.out.println("--------------------stmt.executeQuery(selectSql)-------------------");
 		ResultSet rs=stmt.executeQuery(selectSql);
 		while(rs.next()) {
 			int empno=rs.getInt("empno");

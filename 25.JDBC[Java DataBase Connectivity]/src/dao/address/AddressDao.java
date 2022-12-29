@@ -2,6 +2,7 @@ package dao.address;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -13,67 +14,86 @@ import java.util.List;
  * 
  */
 public class AddressDao {
+	/*
+	 * Connection을 생성하고 해지하는 DataSource 객체를 멤버변수로 가짐
+	 */
+	private DataSource dataSource;
 	public AddressDao() {
+		/*
+		 * dataSource 멤버필드 초기화
+		 */
+		this.dataSource=new DataSource();
 	}
 
 	public int insert(Address newAddress) throws Exception {
-		String insertSQL="insert into address values(address_no_SEQ.nextval,'"+newAddress.getName()+"','"+newAddress.getPhone()+"','"+newAddress.getAddress()+"')";
-		Connection con=null;
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(insertSQL);
+		//preparedStatement로 사용하면 dml문을 클래스로 뺄 수 있다. => 의존성 감소
+		Connection con=dataSource.getConnection();
+		
+		PreparedStatement pstmt=con.prepareStatement(AddressSQL.ADDRESS_INSERT);
+		pstmt.setString(1, newAddress.getName());
+		pstmt.setString(2, newAddress.getName());
+		pstmt.setString(3, newAddress.getPhone());
+		
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">>insert row count: "+rowCount+"행 insert");
-		stmt.close();
-		con.close();
+		pstmt.close();
+		dataSource.close(con);
+		
 		return rowCount;
 	}
 	public int update(Address updateAddress) throws Exception {
-		String updateSql="update address set name='"+updateAddress.getName()+"',phone='"+updateAddress.getPhone()+"',address='"+updateAddress.getAddress()+"' where no="+updateAddress.getNo();
-		Connection con=null;
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(updateSql);
-		System.out.println(">> "+rowCount+"행 update");
+		Connection con=dataSource.getConnection();
 		
-		stmt.close();
-		con.close();
+		PreparedStatement pstmt=con.prepareStatement(AddressSQL.ADDRESS_UPDATE);
+		pstmt.setString(1, updateAddress.getName());
+		pstmt.setString(2, updateAddress.getName());
+		pstmt.setString(3, updateAddress.getPhone());
+		pstmt.setInt(4, updateAddress.getNo());
+		
+		int rowCount=pstmt.executeUpdate();
+		System.out.println(">> "+rowCount+"행 update");
+		pstmt.close();
+		dataSource.close(con);
+		
 		return rowCount;
 	}
 	public int delete(int no) throws Exception {
-		String deleteSql="delete address where no="+no;
-		Connection con=null;
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(deleteSql);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(AddressSQL.ADDRESS_DELETE);
+		
+		pstmt.setInt(1, no);
+		
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+" 행 delete");
-		stmt.close();
-		con.close();
+		pstmt.close();
+		dataSource.close(con);
+		
 		return rowCount;
 	}
 	public Address findByPrimaryKey(int no) throws Exception {
-		String selectSql="select no,name,phone,address from address where no="+no;
 		Address findAddress=null;
-		Connection con=null;
-		Statement stmt=con.createStatement();
-		ResultSet rs=stmt.executeQuery(selectSql);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(AddressSQL.ADDRESS_SELECT_BY_NO);
+		pstmt.setInt(1, no);
+		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {
 			int n=rs.getInt("no");
 			String name=rs.getString("name");
 			String phone=rs.getString("phone");
 			String address=rs.getString("address");
 			findAddress=new Address(no,name,phone,address);
-		} else {
-			findAddress=null;
 		}
-		
 		rs.close();
-		stmt.close();
-		con.close();
+		pstmt.close();
+		dataSource.close(con);
+		
 		return findAddress;
 	}
 	public List<Address> findAll() throws Exception {
-		String selectSql="select no,name,phone,address from address";
 		List<Address> addressList=new ArrayList<Address>();
-		Connection con=null;
-		Statement stmt=con.createStatement();
-		ResultSet rs=stmt.executeQuery(selectSql);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(AddressSQL.ADDRESS_SELECT_ALL);
+		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {
 			do {
 				int no=rs.getInt("no");
@@ -83,12 +103,11 @@ public class AddressDao {
 				Address address=new Address(no,name,phone,addr);
 				addressList.add(address);
 			} while(rs.next());
-		} else {
 		}
-		
 		rs.close();
-		stmt.close();
-		con.close();
+		pstmt.close();
+		dataSource.close(con);
+		
 		return addressList;
 	}
 }

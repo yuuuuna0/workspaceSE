@@ -9,8 +9,9 @@ public class GuestDaoTestMain {
 				
 		GuestDao guestDao=new GuestDao();
 		System.out.println("1.insert");
-		Guest guest=new Guest("정유나",new Date(),"email","homepage","연습","sysdate랑 sequence 어떻게 넣냐");
-		guestDao.insert(guest);
+		//Guest guest=new Guest("정유나",new Date(),"email","homepage","연습","sysdate랑 sequence 어떻게 넣냐");
+		//
+		//guestDao.insert(guest);
 		System.out.println("2.delete");
 		System.out.println("3.updatet");
 		System.out.println("4.findByPrimarykey");

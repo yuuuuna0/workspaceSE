@@ -17,12 +17,12 @@ public class AddressDao {
 	/*
 	 * Connection을 생성하고 해지하는 DataSource 객체를 멤버변수로 가짐
 	 */
-	private DataSource dataSource;
+	private DataSource_Scott dataSource;
 	public AddressDao() {
 		/*
 		 * dataSource 멤버필드 초기화
 		 */
-		this.dataSource=new DataSource();
+		this.dataSource=new DataSource_Scott();
 	}
 
 	public int insert(Address newAddress) throws Exception {

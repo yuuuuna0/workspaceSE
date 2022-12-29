@@ -23,8 +23,8 @@ public class GuestDao {
 	}
 	
 	public int insert(Guest guest) throws Exception{
-		String insertSql="insert into guest values(guest_guest_no_seq.nextval,'"+guest.getGuest_name()+"',"+guest.getGuest_date()
-						+",'"+guest.getGuest_email()+"','"+guest.getGuest_homepage()+"','"+guest.getGuest_title()
+		String insertSql="insert into guest values(guest_guest_no_seq.nextval,'"+guest.getGuest_name()+"','"+guest.getGuest_date()
+						+"','"+guest.getGuest_email()+"','"+guest.getGuest_homepage()+"','"+guest.getGuest_title()
 						+"','"+guest.getGuest_content()+"')";
 		Class.forName(driverClass);
 		Connection con=DriverManager.getConnection(url,user,password);

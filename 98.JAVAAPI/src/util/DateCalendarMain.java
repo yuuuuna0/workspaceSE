@@ -42,7 +42,7 @@ public class DateCalendarMain {
 		 * SimpleDateFormat: Date객체의 시간을 문자열로 변경해주는 클래스
 		 */
 		SimpleDateFormat sdf1=new SimpleDateFormat("yyyy년 MM 월 dd 일");
-		String formatStr1=sdf1.format(now);
+		String formatStr1=sdf1.format(new Date());
 		System.out.println(formatStr1);
 		
 		sdf1.applyPattern("yyyy/MM/dd HH:mm:ss.SSS");

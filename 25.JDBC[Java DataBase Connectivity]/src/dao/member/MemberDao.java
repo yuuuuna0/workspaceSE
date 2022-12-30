@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import dao.address.fourth.Address;
+import dao.common.DataSource;
 
 /*
  * Dao(Data[DataBase] Access Object)객체
@@ -22,75 +23,69 @@ public class MemberDao {
 	static String url="jdbc:oracle:thin:@182.237.126.19:1521:xe";
 	static String user="jdeveloper03";
 	static String password="jdeveloper03";
+	
+	private DataSource dataSource;
+	private MemberSQL memberSQL;
 
-	public MemberDao() {
+	public MemberDao() throws Exception{
+		this.dataSource=new DataSource();
+	}
 
-	}
-/*	
-	private static void memberConnect() throws Exception{
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url, user, password);
-	}
-*/	
-	public Member insert(Member newmember) throws Exception {
-		String insertSQL="insert into member(m_id,m_password,m_name,m_address,m_age,m_married,m_regdate) "
-				+ "values('"+newmember.getM_id()+"','"+newmember.getM_password()+"','"+newmember.getM_name()
-				+"','"+newmember.getM_address()+"',"+newmember.getM_age()+",'"+newmember.getM_married()+"',"+newmember.getM_regdate()+")";
-		
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url, user, password);
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(insertSQL);
+	public Member insert(Member newMember) throws Exception {
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(memberSQL.INSERTSQL);
+		pstmt.setString(1, newMember.getM_id());
+		pstmt.setString(2, newMember.getM_password());
+		pstmt.setString(3, newMember.getM_name());
+		pstmt.setString(4, newMember.getM_address());
+		pstmt.setInt(5, newMember.getM_age());
+		pstmt.setString(6, newMember.getM_married());
+		pstmt.setString(7, newMember.getM_regdate().toString());
+	
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+"행 추가");
 		
-		stmt.close();
+		pstmt.close();
 		con.close();
-		return newmember;
+		return newMember;
 	}
 	
 	public Member update(Member updateMember) throws Exception {
-		//update가 여러개면 overloading해서 쓴다.
-		String updateSQL="update member set m_password='"+updateMember.getM_password()+"',m_name='"+updateMember.getM_name()
-						+"',m_address='"+updateMember.getM_address()+"',m_age="+updateMember.getM_age()+",m_married='"+updateMember.getM_married()
-						+"',m_regdate="+updateMember.getM_regdate()+" where m_id='"+updateMember.getM_id()+"'";
-		
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url, user, password);
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(updateSQL);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(memberSQL.UPDATESQL);
+		pstmt.setString(1, updateMember.getM_password());
+		pstmt.setString(2, updateMember.getM_name());
+		pstmt.setString(3, updateMember.getM_address());
+		pstmt.setInt(4, updateMember.getM_age());
+		pstmt.setString(5, updateMember.getM_married());
+		pstmt.setString(6, updateMember.getM_regdate().toString());
+		pstmt.setString(7, updateMember.getM_id());
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+"행 업데이트");
 		
-		stmt.close();
+		pstmt.close();
 		con.close();
 		return updateMember;
 	}
 	
 	public int delete(String m_id) throws Exception {
-		//delete가 여러개면 overloading해서 쓴다.
-		//영향받은 행의 수를 반환
-		//pk delete
-		String deleteSQL="delete from member where m_id="+m_id;
-		
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url, user, password);
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(deleteSQL);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(memberSQL.DELETESQL);
+		pstmt.setString(1, m_id);
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+"행 삭제");
 		
-		stmt.close();
+		pstmt.close();
 		con.close();
 		return rowCount;
 	}
 
 	public Member findByPrimaryKey(String m_id) throws Exception {
-		//pk find
-		String findSQL="select m_id,m_password,m_name,m_address,m_age,m_married,m_regdate from member where m_id="+m_id;
-	
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(memberSQL.FINDSQL);
+		pstmt.setString(1, m_id);
 		Member findMember=null;
 		
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url, user, password);
-		Statement stmt=con.createStatement();
 		ResultSet rs=stmt.executeQuery(findSQL);
 		if(rs.next()) {
 			String id=rs.getString("m_id");

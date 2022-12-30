@@ -1,7 +1,9 @@
 package dao.common;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 /*
  * 데이터베이스 설정정보를 사용해서 
@@ -9,10 +11,24 @@ import java.sql.DriverManager;
  * (Dao 객체들이 사용하는 객체)
  */
 public class DataSource {
-	private String driverClass="oracle.jdbc.OracleDriver";
-	private String url="jdbc:oracle:thin:@182.237.126.19:1521:xe";
-	private String user="jdeveloper03";
-	private String password="jdeveloper03";
+	private String driverClass;
+	private String url;
+	private String user;
+	private String password;
+	
+	public DataSource() throws Exception{
+		/******jdbc.propertoes를 읽어서 데이터베이스 접속 정보를 필드에 저장********/
+		Properties properties=new Properties();
+		InputStream propertiesInput=DataSource.class.getResourceAsStream("/jdbc.properties");
+		properties.load(propertiesInput);
+		this.driverClass=properties.getProperty("driverClass");
+		this.url=properties.getProperty("url");
+		this.user=properties.getProperty("user");
+		this.password=properties.getProperty("password");
+	}
+	
+	
+	
 	/*
 	 * Connection 객체를 생성해서 반환하는 메쏘드
 	 */

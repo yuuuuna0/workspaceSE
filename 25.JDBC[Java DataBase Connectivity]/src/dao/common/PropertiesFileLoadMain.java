@@ -9,8 +9,6 @@ public class PropertiesFileLoadMain {
 	public static void main(String[] args) throws Exception{
 		/*
 		 *		- *.properties 파일을 loading해서 Properties객체[Map]를 만들어준다.
-		 *		 
-		 *
 		 */
 		
 		Properties properties=new Properties();

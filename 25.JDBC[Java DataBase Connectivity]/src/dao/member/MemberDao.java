@@ -82,11 +82,10 @@ public class MemberDao {
 
 	public Member findByPrimaryKey(String m_id) throws Exception {
 		Connection con=dataSource.getConnection();
-		PreparedStatement pstmt=con.prepareStatement(memberSQL.FINDSQL);
+		PreparedStatement pstmt=con.prepareStatement(memberSQL.FINDBYNOSQL);
 		pstmt.setString(1, m_id);
 		Member findMember=null;
-		
-		ResultSet rs=stmt.executeQuery(findSQL);
+		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {
 			String id=rs.getString("m_id");
 			String password=rs.getString("m_password");
@@ -94,25 +93,24 @@ public class MemberDao {
 			String address=rs.getString("m_address");
 			int age=rs.getInt("m_age");
 			String married=rs.getString("m_married");
-			Date regdate=rs.getDate("m_regdate");
+			String regdate=rs.getDate("m_regdate").toString();
 			
-			findMember=new Member(id,password,name,address,age,married,regdate);
+			//findMember=new Member(id,password,name,address,age,married,regdate);
+			
+			findMember=new Member(rs.getString("m_id"),rs.getString("m_password"),rs.getString("m_name"),rs.getString("m_address"),rs.getInt("m_age"),rs.getString("m_married"),rs.getDate("m_regdate"));
+			 //
 		}
 		rs.close();
-		stmt.close();
+		pstmt.close();
 		con.close();
 		return findMember;
 	}
 	
 	public List<Member> findAll() throws Exception  {
-		String findSQL="select m_id,m_password,m_name,m_address,m_age,m_married,m_regdate from member";
-		
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(memberSQL.FINDALLSQL);
 		List<Member> memberList=new ArrayList<Member>();
-		
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url, user, password);
-		Statement stmt=con.createStatement();
-		ResultSet rs=stmt.executeQuery(findSQL);
+		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {
 			do {
 				String id=rs.getString("m_id");
@@ -127,7 +125,7 @@ public class MemberDao {
 			} while(rs.next());
 		}
 		rs.close();
-		stmt.close();
+		pstmt.close();
 		con.close();
 		return memberList;
 	}

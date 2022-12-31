@@ -10,7 +10,7 @@ public class MemberDaoTestMain {
 		System.out.println("0.delete   --> ");
 		memberDao.delete("'aaaa'");
 		System.out.println("1.insert   --> ");
-		Member newMember=new Member("aaaa","aaaa","정유나","서울시 광진구",30,"F",new Date());
+		Member newMember=new Member("dddd","dddd","정유나","서울시 광진구",30,"F",new Date());
 		memberDao.insert(newMember);
 		System.out.println("2.update   --> ");
 		Member updateMember=new Member("bbbb","b1b1","정유가","서울시 광진구",30,"F",new Date());

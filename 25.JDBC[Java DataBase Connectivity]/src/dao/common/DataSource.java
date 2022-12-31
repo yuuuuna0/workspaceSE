@@ -27,8 +27,6 @@ public class DataSource {
 		this.password=properties.getProperty("password");
 	}
 	
-	
-	
 	/*
 	 * Connection 객체를 생성해서 반환하는 메쏘드
 	 */

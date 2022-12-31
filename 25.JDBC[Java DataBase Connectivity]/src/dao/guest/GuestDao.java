@@ -2,11 +2,14 @@ package dao.guest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import dao.common.DataSource;
 
 /*
  * Dao(Data[DataBase] Access Object)객체(클래스)
@@ -14,59 +17,62 @@ import java.util.List;
  *     단위메쏘드를 가지고있는 객체(클래스)
  */
 public class GuestDao {
-	private static String driverClass="oracle.jdbc.OracleDriver";
-	private static String url="jdbc:oracle:thin:@182.237.126.19:1521:xe";
-	private static String user="jdeveloper03";
-	private static String password="jdeveloper03";
+	private DataSource dataSource;
+	private GuestSQL guestSQL;
 	
-	public GuestDao() {
+	public GuestDao() throws Exception{
+		this.dataSource=new DataSource();
 	}
 	
 	public int insert(Guest guest) throws Exception{
-		String insertSql="insert into guest values(guest_guest_no_seq.nextval,'"+guest.getGuest_name()+"','"+guest.getGuest_date()
-						+"','"+guest.getGuest_email()+"','"+guest.getGuest_homepage()+"','"+guest.getGuest_title()
-						+"','"+guest.getGuest_content()+"')";
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url,user,password);
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(insertSql);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(guestSQL.INSERTSQL);
+		pstmt.setString(1, guest.getGuest_name());
+		java.sql.Date sqlDate=new java.sql.Date(guest.getGuest_date().getTime());
+		pstmt.setDate(2, sqlDate);
+		pstmt.setString(3, guest.getGuest_email());
+		pstmt.setString(4, guest.getGuest_homepage());
+		pstmt.setString(5, guest.getGuest_title());
+		pstmt.setString(6, guest.getGuest_content());
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+" 행 추가");
-		stmt.close();
+		pstmt.close();
 		con.close();
 		return rowCount;
 	}
 	
 	public int delete(int guest_no) throws Exception{
-		String deleteSql="delete from guest where guest_no="+guest_no;
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url,user,password);
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(deleteSql);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(guestSQL.DELETESQL);
+		pstmt.setInt(1, guest_no);
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+" 행 삭제");
-		stmt.close();
+		pstmt.close();
 		con.close();
 		return rowCount;
 	}
 	public int update(Guest guest) throws Exception{
-		String updateSql="update guest set guest_name='"+guest.getGuest_name()+"',guest_date="+guest.getGuest_date()
-						+",guest_email='"+guest.getGuest_email()+"',guest_homepage='"+guest.getGuest_homepage()+"',guest_title='"
-						+guest.getGuest_title()+"',guest_content='"+guest.getGuest_content()+"' where guest_no="+guest.getGuest_no();
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url,user,password);
-		Statement stmt=con.createStatement();
-		int rowCount=stmt.executeUpdate(updateSql);
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(guestSQL.UPDATESQL);
+		pstmt.setString(1, guest.getGuest_name());
+		java.sql.Date sqlDate=new java.sql.Date(guest.getGuest_date().getTime());
+		pstmt.setDate(2, sqlDate);
+		pstmt.setString(3, guest.getGuest_email());
+		pstmt.setString(4, guest.getGuest_homepage());
+		pstmt.setString(5, guest.getGuest_title());
+		pstmt.setString(6, guest.getGuest_content());
+		pstmt.setInt(7, guest.getGuest_no());
+		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+" 행 업데이트");
-		stmt.close();
+		pstmt.close();
 		con.close();
 		return rowCount;
 	}
 	public Guest findByPrimaryKey(int guest_no) throws Exception{
-		String selectSql="select * from guest where guest_no="+guest_no;
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(guestSQL.FINDBYNOSQL);
 		Guest findGuest=null;
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url,user,password);
-		Statement stmt=con.createStatement();
-		ResultSet rs=stmt.executeQuery(selectSql);
+		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {
 			int no=rs.getInt("guest_no");
 			String name=rs.getString("guest_name");
@@ -77,15 +83,16 @@ public class GuestDao {
 			String content=rs.getString("guest_content");
 			findGuest=new Guest(no,name,date,email,homepage,title,content);
 		}
+		rs.close();
+		pstmt.close();
+		con.close();
 		return findGuest;
 	}
 	public List<Guest> findAll() throws Exception{
-		String selectSql="select * from guest";
+		Connection con=dataSource.getConnection();
+		PreparedStatement pstmt=con.prepareStatement(guestSQL.FINDALLSQL);
+		ResultSet rs=pstmt.executeQuery();
 		List<Guest> guestList=new ArrayList<Guest>();
-		Class.forName(driverClass);
-		Connection con=DriverManager.getConnection(url,user,password);
-		Statement stmt=con.createStatement();
-		ResultSet rs=stmt.executeQuery(selectSql);
 		if(rs.next()) {
 			do{
 				int no=rs.getInt("guest_no");
@@ -99,6 +106,9 @@ public class GuestDao {
 				guestList.add(guest);
 			} while(rs.next());
 		}
+		rs.close();
+		pstmt.close();
+		con.close();
 		return guestList;
 	}
 	

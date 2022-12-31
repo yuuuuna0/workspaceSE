@@ -19,11 +19,6 @@ import dao.common.DataSource;
  *        단위메쏘드를 가지고있는 클래스
  */
 public class MemberDao {
-	static String driverClass="oracle.jdbc.OracleDriver";
-	static String url="jdbc:oracle:thin:@182.237.126.19:1521:xe";
-	static String user="jdeveloper03";
-	static String password="jdeveloper03";
-	
 	private DataSource dataSource;
 	private MemberSQL memberSQL;
 

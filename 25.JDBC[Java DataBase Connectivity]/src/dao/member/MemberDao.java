@@ -93,12 +93,12 @@ public class MemberDao {
 			String address=rs.getString("m_address");
 			int age=rs.getInt("m_age");
 			String married=rs.getString("m_married");
-			String regdate=rs.getDate("m_regdate").toString();
+			Date regdate=rs.getDate("m_regdate");
 			
-			//findMember=new Member(id,password,name,address,age,married,regdate);
+			findMember=new Member(id,password,name,address,age,married,regdate);
 			
-			findMember=new Member(rs.getString("m_id"),rs.getString("m_password"),rs.getString("m_name"),rs.getString("m_address"),rs.getInt("m_age"),rs.getString("m_married"),rs.getDate("m_regdate"));
-			 //
+			//findMember=new Member(rs.getString("m_id"),rs.getString("m_password"),rs.getString("m_name"),rs.getString("m_address"),rs.getInt("m_age"),rs.getString("m_married"),rs.getDate("m_regdate"));
+			
 		}
 		rs.close();
 		pstmt.close();

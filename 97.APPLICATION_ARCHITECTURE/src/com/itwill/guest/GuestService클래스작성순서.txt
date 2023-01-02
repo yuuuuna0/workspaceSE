@@ -1,0 +1,55 @@
+######## GuestService(Manager) 클래스작성 ############
+1.클래스생성
+  	GuestService.java
+
+2. 요구사항에서 도출된단위업무를 주석으로기술	
+3. GuestService클래스 메쏘드기술(인자 ,반환타입)
+4. GuestDao를 멤버필드로선언
+5. GuestService클래스 생성자에서 GuestDao객체생성
+6. 도출된메쏘드내용채움
+
+
+  ex>
+	public class GuestService{
+		private GuestDao guestDao;
+		public GuestService(){
+			this.guestDao=new GuestDao();
+		}
+		
+		/*
+		 * 방명록쓰기
+		 */
+		public int guestWrite(Guest newGuest) 
+				throws Exception{
+			<< GuestDao객체사용>>
+		}
+		/*
+		 * 방명록번호로 1개보기
+		 */
+		public Guest guestDetail(int no) throws Exception{
+			
+		}
+		/*
+		 * 방명록번호로삭제
+		 */
+		public int guestDelete(int guest_no) 
+				throws Exception{
+			
+		}
+		/*
+		 * 방명록 리스트보기
+		 */
+		public List<Guest> guestList()throws Exception {
+			
+		}
+	}
+7. 도출된메쏘드내용채움
+
+8.<<< 반드시 테스트 되어야합니다.>>>
+	public class GuestServiceTestMain {
+	
+		public static void main(String[] args) throws Exception{
+			GuestService GuestService=new GuestService();
+					
+		}
+	}				

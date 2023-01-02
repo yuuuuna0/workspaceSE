@@ -17,6 +17,13 @@ public class GuestService {
 		return rowCount;
 	}
 	/*
+	 * 방명록 수정
+	 */
+	public int guestUpdate(Guest guest) throws Exception{
+		int rowCount=guestDao.update(guest);
+		return rowCount;
+	}
+	/*
 	 * 방명록번호로 1개보기
 	 */
 	public Guest guestDetail(int guest_no) throws Exception{

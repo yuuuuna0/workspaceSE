@@ -10,7 +10,8 @@ import java.sql.DriverManager;
  */
 public class DataSource_Scott {
 	private String driverClass="oracle.jdbc.OracleDriver";
-	private String url="jdbc:oracle:thin:@182.237.126.19:1521:xe";
+	private String url="jdbc:oracle:thin:@localhost"
+			+ ":1521:xe";
 	private String user="scott";
 	private String password="tiger";
 	/*

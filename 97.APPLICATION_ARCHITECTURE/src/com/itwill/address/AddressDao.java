@@ -43,7 +43,7 @@ public class AddressDao {
 		
 		return rowCount;
 	}
-	public int update(Address updateAddress) throws Exception {
+	public Address update(Address updateAddress) throws Exception {
 		Connection con=dataSource.getConnection();
 		
 		PreparedStatement pstmt=con.prepareStatement(AddressSQL.ADDRESS_UPDATE);
@@ -57,7 +57,7 @@ public class AddressDao {
 		pstmt.close();
 		dataSource.close(con);
 		
-		return rowCount;
+		return updateAddress;
 	}
 	public int delete(int no) throws Exception {
 		Connection con=dataSource.getConnection();

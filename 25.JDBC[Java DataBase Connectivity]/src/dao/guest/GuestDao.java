@@ -71,6 +71,7 @@ public class GuestDao {
 	public Guest findByPrimaryKey(int guest_no) throws Exception{
 		Connection con=dataSource.getConnection();
 		PreparedStatement pstmt=con.prepareStatement(guestSQL.FINDBYNOSQL);
+		pstmt.setInt(1, guest_no);
 		Guest findGuest=null;
 		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {

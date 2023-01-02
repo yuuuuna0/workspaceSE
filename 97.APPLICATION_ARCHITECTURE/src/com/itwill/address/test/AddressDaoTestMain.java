@@ -16,8 +16,7 @@ public class AddressDaoTestMain {
 		System.out.println(">>insert row Coun: "+rowCount);
 		System.out.println("2. update");
 		Address updateAddress=new Address(10,"김변경","000-0000","주소변경");
-		rowCount=addressDao.update(updateAddress);
-		System.out.println(">>update row Coun: "+rowCount);		
+		addressDao.update(updateAddress);
 		System.out.println("3. delete");
 		rowCount=addressDao.delete(20);
 		System.out.println(">>delete row Coun: "+rowCount);		

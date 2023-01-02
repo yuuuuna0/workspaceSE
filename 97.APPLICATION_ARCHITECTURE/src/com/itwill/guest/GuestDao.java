@@ -29,7 +29,7 @@ public class GuestDao {
 		pstmt.setString(2,guest.getGuest_email());
 		pstmt.setString(3,guest.getGuest_homepage());
 		pstmt.setString(4,guest.getGuest_title());
-		pstmt.setString(4,guest.getGuest_content());
+		pstmt.setString(5,guest.getGuest_content());
 		int rowCount=pstmt.executeUpdate();
 		pstmt.close();
 		return rowCount;
@@ -63,9 +63,10 @@ public class GuestDao {
 		//guest가 없으면 null 임을 알려주기 위해 처음에 객체를 생성 후 null을 넣어주는 것이다.
 		Connection con=dataSource.getConnection();
 		PreparedStatement pstmt=con.prepareStatement(GuestSQL.FINDBYNOSQL);
+		pstmt.setInt(1, guest_no);
 		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {
-			findGuest=new Guest(rs.getInt(guest_no), 
+			findGuest=new Guest(rs.getInt("guest_no"), 
 								rs.getString("guest_name"), 
 								rs.getDate("guest_date"), 
 								rs.getString("guest_email"), 
@@ -79,7 +80,7 @@ public class GuestDao {
 	public List<Guest> findAll() throws Exception{
 		List<Guest> guestList=new ArrayList<Guest>();
 		Connection con=dataSource.getConnection();
-		PreparedStatement pstmt=con.prepareStatement(GuestSQL.FINDBYNOSQL);
+		PreparedStatement pstmt=con.prepareStatement(GuestSQL.FINDALLSQL);
 		ResultSet rs=pstmt.executeQuery();
 		while(rs.next()) {
 			Guest guest=new Guest(rs.getInt("guest_no"), 
@@ -102,7 +103,7 @@ public class GuestDao {
 		ResultSet rs=pstmt.executeQuery();
 		while(rs.next()) {
 			Guest guest=new Guest(rs.getInt("guest_no"), 
-								rs.getString(name), 
+								rs.getString("guest_name"), 
 								rs.getDate("guest_date"), 
 								rs.getString("guest_email"), 
 								rs.getString("guest_homepage"), 

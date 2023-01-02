@@ -28,12 +28,10 @@ public class GuestDao {
 		Connection con=dataSource.getConnection();
 		PreparedStatement pstmt=con.prepareStatement(guestSQL.INSERTSQL);
 		pstmt.setString(1, guest.getGuest_name());
-		java.sql.Date sqlDate=new java.sql.Date(guest.getGuest_date().getTime());
-		pstmt.setDate(2, sqlDate);
-		pstmt.setString(3, guest.getGuest_email());
-		pstmt.setString(4, guest.getGuest_homepage());
-		pstmt.setString(5, guest.getGuest_title());
-		pstmt.setString(6, guest.getGuest_content());
+		pstmt.setString(2, guest.getGuest_email());
+		pstmt.setString(3, guest.getGuest_homepage());
+		pstmt.setString(4, guest.getGuest_title());
+		pstmt.setString(5, guest.getGuest_content());
 		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+" 행 추가");
 		pstmt.close();

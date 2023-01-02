@@ -33,9 +33,7 @@ public class Member {
 	public Member() {
 	}
 	
-	public Member(String m_id, String m_password, String m_name, String m_address, int m_age, String m_married,
-			Date m_regdate) {
-		super();
+	public Member(String m_id, String m_password, String m_name, String m_address, int m_age, String m_married,Date m_regdate) {
 		this.m_id = m_id;
 		this.m_password = m_password;
 		this.m_name = m_name;

@@ -35,10 +35,7 @@ public class MemberDao {
 		pstmt.setString(3, newMember.getM_name());
 		pstmt.setString(4, newMember.getM_address());
 		pstmt.setInt(5, newMember.getM_age());
-		pstmt.setString(6, newMember.getM_married());
-		java.sql.Date date=new java.sql.Date(newMember.getM_regdate().getTime());
-		pstmt.setDate(7, date);
-	
+		pstmt.setString(6, newMember.getM_married());	
 		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+"행 추가");
 		
@@ -55,9 +52,7 @@ public class MemberDao {
 		pstmt.setString(3, updateMember.getM_address());
 		pstmt.setInt(4, updateMember.getM_age());
 		pstmt.setString(5, updateMember.getM_married());
-		java.sql.Date date=new java.sql.Date(updateMember.getM_regdate().getTime());
-		pstmt.setDate(6, date);
-		pstmt.setString(7, updateMember.getM_id());
+		pstmt.setString(6, updateMember.getM_id());
 		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+"행 업데이트");
 		
@@ -80,7 +75,7 @@ public class MemberDao {
 
 	public Member findByPrimaryKey(String m_id) throws Exception {
 		Connection con=dataSource.getConnection();
-		PreparedStatement pstmt=con.prepareStatement(memberSQL.FINDBYNOSQL);
+		PreparedStatement pstmt=con.prepareStatement(memberSQL.FINDBYIDSQL);
 		pstmt.setString(1, m_id);
 		Member findMember=null;
 		ResultSet rs=pstmt.executeQuery();
@@ -109,18 +104,16 @@ public class MemberDao {
 		PreparedStatement pstmt=con.prepareStatement(memberSQL.FINDALLSQL);
 		List<Member> memberList=new ArrayList<Member>();
 		ResultSet rs=pstmt.executeQuery();
-		if(rs.next()) {
-			do {
-				String id=rs.getString("m_id");
-				String password=rs.getString("m_password");
-				String name=rs.getString("m_name");
-				String address=rs.getString("m_address");
-				int age=rs.getInt("m_age");
-				String married=rs.getString("m_married");
-				Date regdate=rs.getDate("m_regdate");
-				Member member=new Member(id,password,name,address,age,married,regdate);
-				memberList.add(member);
-			} while(rs.next());
+		while(rs.next()) {
+			String id=rs.getString("m_id");
+			String password=rs.getString("m_password");
+			String name=rs.getString("m_name");
+			String address=rs.getString("m_address");
+			int age=rs.getInt("m_age");
+			String married=rs.getString("m_married");
+			Date regdate=rs.getDate("m_regdate");
+			Member member=new Member(id,password,name,address,age,married,regdate);
+			memberList.add(member);
 		}
 		rs.close();
 		pstmt.close();

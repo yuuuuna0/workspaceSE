@@ -1,7 +1,10 @@
-package com.itwill.member;
+package com.itwill.member.test;
 
 import java.util.Date;
 import java.util.List;
+
+import com.itwill.member.Member;
+import com.itwill.member.MemberDao;
 
 public class MemberDaoTestMain {
 

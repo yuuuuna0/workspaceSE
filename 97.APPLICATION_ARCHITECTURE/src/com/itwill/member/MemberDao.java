@@ -1,4 +1,4 @@
-package dao.member;
+package com.itwill.member;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dao.address.fourth.Address;
-import dao.common.DataSource;
+import com.itwill.common.DataSource;
+
+
 
 /*
  * Dao(Data[DataBase] Access Object)객체

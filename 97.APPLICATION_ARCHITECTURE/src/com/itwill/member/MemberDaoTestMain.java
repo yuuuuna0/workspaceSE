@@ -1,4 +1,4 @@
-package dao.member;
+package com.itwill.member;
 
 import java.util.Date;
 import java.util.List;

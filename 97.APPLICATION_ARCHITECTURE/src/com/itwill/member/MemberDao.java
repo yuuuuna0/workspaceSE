@@ -36,6 +36,7 @@ public class MemberDao {
 		pstmt.setString(4, newMember.getM_address());
 		pstmt.setInt(5, newMember.getM_age());
 		pstmt.setString(6, newMember.getM_married());	
+		//date 입력 시 : sql data로 입력해야 하므로 java.sql.Date(newMember.getM_regdate().getTime())
 		int rowCount=pstmt.executeUpdate();
 		System.out.println(">> "+rowCount+"행 추가");
 		
@@ -80,18 +81,13 @@ public class MemberDao {
 		Member findMember=null;
 		ResultSet rs=pstmt.executeQuery();
 		if(rs.next()) {
-			String id=rs.getString("m_id");
-			String password=rs.getString("m_password");
-			String name=rs.getString("m_name");
-			String address=rs.getString("m_address");
-			int age=rs.getInt("m_age");
-			String married=rs.getString("m_married");
-			Date regdate=rs.getDate("m_regdate");
-			
-			findMember=new Member(id,password,name,address,age,married,regdate);
-			
-			//findMember=new Member(rs.getString("m_id"),rs.getString("m_password"),rs.getString("m_name"),rs.getString("m_address"),rs.getInt("m_age"),rs.getString("m_married"),rs.getDate("m_regdate"));
-			
+			findMember=new Member(rs.getString("m_id"),
+								  rs.getString("m_password"),
+								  rs.getString("m_name"),
+								  rs.getString("m_address"),
+								  rs.getInt("m_age"),
+								  rs.getString("m_married"),
+								  rs.getDate("m_regdate"));
 		}
 		rs.close();
 		pstmt.close();
@@ -105,14 +101,13 @@ public class MemberDao {
 		List<Member> memberList=new ArrayList<Member>();
 		ResultSet rs=pstmt.executeQuery();
 		while(rs.next()) {
-			String id=rs.getString("m_id");
-			String password=rs.getString("m_password");
-			String name=rs.getString("m_name");
-			String address=rs.getString("m_address");
-			int age=rs.getInt("m_age");
-			String married=rs.getString("m_married");
-			Date regdate=rs.getDate("m_regdate");
-			Member member=new Member(id,password,name,address,age,married,regdate);
+			Member member=new Member(rs.getString("m_id"),
+					  				 rs.getString("m_password"),
+					  				 rs.getString("m_name"),
+					  				 rs.getString("m_address"),
+					  				 rs.getInt("m_age"),
+					  				 rs.getString("m_married"),
+					  				 rs.getDate("m_regdate"));
 			memberList.add(member);
 		}
 		rs.close();

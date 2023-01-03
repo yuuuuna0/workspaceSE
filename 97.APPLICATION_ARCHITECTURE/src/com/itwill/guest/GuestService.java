@@ -13,15 +13,13 @@ public class GuestService {
 	 */
 	public int guestWrite(Guest newGuest) throws Exception{
 		//<< GuestDao객체사용>>
-		int rowCount=guestDao.insert(newGuest);
-		return rowCount;
+		return guestDao.insert(newGuest);
 	}
 	/*
 	 * 방명록 수정
 	 */
 	public int guestUpdate(Guest guest) throws Exception{
-		int rowCount=guestDao.update(guest);
-		return rowCount;
+		return guestDao.update(guest);
 	}
 	/*
 	 * 방명록번호로 1개보기
@@ -33,8 +31,7 @@ public class GuestService {
 	 * 방명록번호로삭제
 	 */
 	public int guestDelete(int guest_no) throws Exception{
-		int rowCount=guestDao.delete(guest_no);
-		return rowCount;
+		return guestDao.delete(guest_no);
 	}
 	/*
 	 * 방명록 전체 검색

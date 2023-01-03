@@ -1,0 +1,48 @@
+######## MemberService(Manager) 클래스작성 ############
+1.클래스생성
+  	MemberService.java
+
+2. 요구사항에서 도출된단위업무를 주석으로기술	
+3. MemberService클래스 메쏘드기술(인자 ,반환타입)
+4. MemberDao를 멤버필드로선언
+5. MemberService클래스 생성자에서 MemberDao객체생성
+6. 도출된메쏘드내용채움
+  ex>
+	public class MemberService{
+		private MemberDao MemberDao;
+		public MemberService(){
+			MemberDao=new MemberDao();
+		}
+		/*
+		번호,이름,나이,연락처를 입력하여 회원 추가한다.
+		*/
+		public void addMember(Member addMember){
+			/*
+			 << Dao사용 >>
+			*/
+		}
+		/*
+		이름을 입력하여 검색한다.
+		*/
+		
+		/*
+		번호을 입력하여 검색한다.
+		*/
+		/*
+		전체회원을 출력한다.
+		*/
+		
+		/*
+		회원 번호를 입력하여 회원을 삭제한다.
+		
+		*/		
+		
+	}
+7.<<< 반드시 테스트 되어야합니다.>>>
+	public class MemberServiceTestMain {
+		public static void main(String[] args)
+				throws Exception {
+			MemberService memberService=new MemberService();
+			System.out.println("1.회원가입");
+		}
+	}	

@@ -31,11 +31,17 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.Vector;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.ListSelectionModel;
 
 public class MemberMainFrame extends JFrame {
 	/************************* 1. Service 멤버필드 선언 ****************************/
@@ -43,6 +49,8 @@ public class MemberMainFrame extends JFrame {
 	/*******************************************************************************/
 	/***** 로그인 한 회원 ******/
 	private Member loginMember=null;
+	
+	private int selected_index=0;	//
 	
 	private JPanel contentPane;
 	private JTextField idTF;
@@ -93,8 +101,10 @@ public class MemberMainFrame extends JFrame {
 	private JTextField infoAddressTF;
 	private JPasswordField infoPasswordTF;
 	private JTable table;
-	private JTable table_1;
+	private JTable memberListTB;
 	private JPanel memberAdminPanel;
+	private JButton memberDeleteBtn;
+	private JButton memberListBtn;
 
 	/**
 	 * Launch the application.
@@ -167,6 +177,14 @@ public class MemberMainFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		memberTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		memberTabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				int selectedTabIndex=memberTabbedPane.getSelectedIndex();
+				if(selectedTabIndex==4) {
+					displayMemberList();
+				}
+			}
+		});
 		contentPane.add(memberTabbedPane, BorderLayout.CENTER);
 		
 		memberMainPanel = new JPanel();
@@ -476,11 +494,19 @@ public class MemberMainFrame extends JFrame {
 		memberAdminPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(23, 42, 373, 144);
+		scrollPane.setBounds(23, 28, 373, 144);
 		memberAdminPanel.add(scrollPane);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		memberListTB = new JTable();
+		memberListTB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		memberListTB.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selected_index=memberListTB.getSelectedRow();	//getSelectedRow: row의 인덱스 반환, 선택 안되면 -1 반환
+				memberDeleteBtn.setEnabled(true);
+			}
+		});
+		memberListTB.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
@@ -497,15 +523,15 @@ public class MemberMainFrame extends JFrame {
 				"\uC544\uC774\uB514", "\uD328\uC2A4\uC6CC\uB4DC", "\uB984", "\uC8FC\uC18C", "\uB098\uC774", "\uACB0\uD63C", "\uB4F1\uB85D\uC77C"
 			}
 		));
-		scrollPane.setViewportView(table_1);
+		scrollPane.setViewportView(memberListTB);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"정유가", "정유나", "정유다", "정유라", "정유마", "가가가", "나나나", "다다다", "라라라", "마마마", "바바바", "사사사"}));
-		comboBox.setBounds(194, 211, 202, 23);
+		comboBox.setBounds(244, 234, 130, 23);
 		memberAdminPanel.add(comboBox);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(23, 211, 130, 188);
+		scrollPane_1.setBounds(35, 234, 130, 188);
 		memberAdminPanel.add(scrollPane_1);
 		
 		JList list = new JList();
@@ -519,11 +545,82 @@ public class MemberMainFrame extends JFrame {
 			}
 		});
 		scrollPane_1.setViewportView(list);
+		
+		memberListBtn = new JButton("회원리스트보기");
+		memberListBtn.addActionListener(new ActionListener() {
+			private List<Member> memberList;
+
+			public void actionPerformed(ActionEvent e) {
+				displayMemberList();
+			}
+		});
+		memberListBtn.setBounds(59, 182, 138, 23);
+		memberAdminPanel.add(memberListBtn);
+		
+		memberDeleteBtn = new JButton("회원삭제");
+		memberDeleteBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int selectedRow=memberListTB.getSelectedRow();
+					if(selected_index>=0) {
+						String selectedId=(String)memberListTB.getValueAt(selectedRow, 0);
+						memberService.deleteMember(selectedId);
+						displayMemberList();
+					} else {
+						memberDeleteBtn.setEnabled(false);
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		memberDeleteBtn.setEnabled(false);
+		memberDeleteBtn.setBounds(248, 182, 97, 23);
+		memberAdminPanel.add(memberDeleteBtn);
 		/************************* 2. MemberService 멤버필드 선언 ****************************/
 		memberService=new MemberService();
 		logoutProcess();
 		/*******************************************************************************/
 	}//생성자 끝
+	
+	private void displayMemberList() {
+		/*********************** 회원리스트보기 ***************************/
+		try {
+			List<Member> memberList=memberService.memberList();
+			
+			Vector columnVector = new Vector();
+			columnVector.add("아이디");
+			columnVector.add("패스워드");
+			columnVector.add("이름");
+			columnVector.add("주소");
+			columnVector.add("나이");
+			columnVector.add("결혼");
+			columnVector.add("가입일");
+			
+			Vector tableVector =new Vector();
+			
+			for(Member member:memberList) {
+				Vector rowVector = new Vector();
+				rowVector.add(member.getM_id());
+				rowVector.add(member.getM_password());
+				rowVector.add(member.getM_name());
+				rowVector.add(member.getM_address());
+				rowVector.add(member.getM_age());
+				rowVector.add(member.getM_married());
+				rowVector.add(member.getM_regdate());
+
+				tableVector.add(rowVector);
+			}
+			DefaultTableModel tableModel=new DefaultTableModel(tableVector,columnVector);
+			memberListTB.setModel(tableModel);
+			//memberListTB.setRowSelectionInterval(-1, -1);		//이 메쏘드 뭘까
+			memberDeleteBtn.setEnabled(false);
+		} catch(Exception e1) {
+			System.out.println(e1.getMessage());
+		}
+	}
+	
+	
 	/*
 	 * 회원수정 폼 활성화 & 비활성화
 	 */

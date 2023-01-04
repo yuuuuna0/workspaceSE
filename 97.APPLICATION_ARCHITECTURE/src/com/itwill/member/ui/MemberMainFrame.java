@@ -185,7 +185,7 @@ public class MemberMainFrame extends JFrame {
 				}
 			}
 		});
-		lblNewLabel_14.setIcon(new ImageIcon("C:\\2022-11-JAVA-DEVELOPER\\01.JAVA_FUNDEMENTAL\\image\\ball.png"));
+		lblNewLabel_14.setIcon(new ImageIcon(MemberMainFrame.class.getResource("/images/ball.png")));
 		memberMainPanel.add(lblNewLabel_14, BorderLayout.CENTER);
 		
 		memberLoginPanel = new JPanel();

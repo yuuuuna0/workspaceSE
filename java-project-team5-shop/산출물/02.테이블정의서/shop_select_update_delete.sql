@@ -52,4 +52,6 @@ select *
 where userid='guard1' and o.o_no=1;
 --2. 삭제 
 --2-1. 로그인 한 멤버(guard1)의 주문 한 개 삭제
---2-2. 로그인 한 멤버(guard1)의 주문 한 개 삭제
+delete from orders where userd='guard1' and o_no=1; 
+--2-2. 로그인 한 멤버(guard1)의 주문 전체 삭제
+delete from orders where userid='guard1';

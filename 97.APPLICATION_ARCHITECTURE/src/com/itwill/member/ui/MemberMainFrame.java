@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JMenuBar;
@@ -105,6 +106,8 @@ public class MemberMainFrame extends JFrame {
 	private JPanel memberAdminPanel;
 	private JButton memberDeleteBtn;
 	private JButton memberListBtn;
+	private JList memberListLT;
+	private JComboBox memberListCB;
 
 	/**
 	 * Launch the application.
@@ -525,17 +528,17 @@ public class MemberMainFrame extends JFrame {
 		));
 		scrollPane.setViewportView(memberListTB);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"정유가", "정유나", "정유다", "정유라", "정유마", "가가가", "나나나", "다다다", "라라라", "마마마", "바바바", "사사사"}));
-		comboBox.setBounds(244, 234, 130, 23);
-		memberAdminPanel.add(comboBox);
+		memberListCB = new JComboBox();
+		memberListCB.setModel(new DefaultComboBoxModel(new String[] {"정유가", "정유나", "정유다", "정유라", "정유마", "가가가", "나나나", "다다다", "라라라", "마마마", "바바바", "사사사"}));
+		memberListCB.setBounds(244, 234, 130, 23);
+		memberAdminPanel.add(memberListCB);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(35, 234, 130, 188);
 		memberAdminPanel.add(scrollPane_1);
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		memberListLT = new JList();
+		memberListLT.setModel(new AbstractListModel() {
 			String[] values = new String[] {"정유가", "정유나", "정유다", "정유라", "정유마", "가가가", "나나나", "다다다", "라라라", "마마마", "바바바", "사사사"};
 			public int getSize() {
 				return values.length;
@@ -544,7 +547,7 @@ public class MemberMainFrame extends JFrame {
 				return values[index];
 			}
 		});
-		scrollPane_1.setViewportView(list);
+		scrollPane_1.setViewportView(memberListLT);
 		
 		memberListBtn = new JButton("회원리스트보기");
 		memberListBtn.addActionListener(new ActionListener() {
@@ -584,10 +587,9 @@ public class MemberMainFrame extends JFrame {
 	}//생성자 끝
 	
 	private void displayMemberList() {
-		/*********************** 회원리스트보기 ***************************/
 		try {
 			List<Member> memberList=memberService.memberList();
-			
+			/*********************** 회원리스트보기[JTable] ***************************/
 			Vector columnVector = new Vector();
 			columnVector.add("아이디");
 			columnVector.add("패스워드");
@@ -615,6 +617,19 @@ public class MemberMainFrame extends JFrame {
 			memberListTB.setModel(tableModel);
 			//memberListTB.setRowSelectionInterval(-1, -1);		//이 메쏘드 뭘까
 			memberDeleteBtn.setEnabled(false);
+			
+			/*********************** 회원리스트보기[JList] ***************************/
+			DefaultListModel listModel=new DefaultListModel();
+			for(Member member:memberList) {
+				listModel.addElement(member.getM_id());
+			}
+			memberListLT.setModel(listModel);
+			/*********************** 회원리스트보기[JComboBox] ***************************/
+			DefaultComboBoxModel comboBoxModel=new DefaultComboBoxModel();
+			for(Member member:memberList) {
+				comboBoxModel.addElement(member.getM_id());
+			}
+			memberListCB.setModel(comboBoxModel);
 		} catch(Exception e1) {
 			System.out.println(e1.getMessage());
 		}

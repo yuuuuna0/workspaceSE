@@ -1,4 +1,4 @@
-package com.itwill.shop.product;
+package com.itwill.shop.test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.itwill.shop.common.DataSource;
+import com.itwill.shop.product.Product;
+import com.itwill.shop.product.ProductSQL;
 /*
 쇼핑몰에서 상품테이블과의 데이타베이스와의 작업을 전담하는 클래스
 PRODUCT 테이블에 제품 검색 등의 작업을한다.

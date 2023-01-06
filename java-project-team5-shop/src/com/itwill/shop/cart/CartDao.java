@@ -66,9 +66,7 @@ public class CartDao {
 		return insertRowCount;
 		
 	}
-	/*
-	 * cart insert
-	 */
+	
 	public int insert(String sUserId,int p_no,int cart_qty) throws Exception {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -109,6 +107,24 @@ public class CartDao {
 		}
 		return rowCount;
 	}
+	public int updateByProductNo(Cart cart) throws Exception{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rowCount=0;
+		try {
+			con=dataSource.getConnection();
+			pstmt=con.prepareStatement(CartSQL.CART_UPDATE_BY_PRODUCT_NO_USERID);
+			pstmt.setInt(1, cart.getCart_qty());
+			pstmt.setString(2, cart.getUserid());
+			pstmt.setInt(3, cart.getProduct().getP_no());
+			rowCount = pstmt.executeUpdate();
+		}finally {
+			if(con!=null) {
+				con.close();
+			}
+		}
+		return rowCount;
+	}
 	/*
 	 * cart update(카트리스트에서 수정)
 	 */
@@ -129,33 +145,57 @@ public class CartDao {
 		}
 		return rowCount;
 	}
+	public int updateByCartNo(Cart cart) throws Exception{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		int rowCount=0;
+		try {
+			con=dataSource.getConnection();
+			pstmt=con.prepareStatement(CartSQL.CART_UPDATE_BY_CART_NO);
+			pstmt.setInt(1, cart.getCart_qty());
+			pstmt.setInt(2, cart.getCart_no());
+			rowCount = pstmt.executeUpdate();
+		}finally {
+			if(con!=null) {
+				con.close();
+			}
+		}
+		return rowCount;
+	}
 	/*
 	 * cart list
 	 */
-	public List<Cart> findByUserId(String sUserId) throws Exception{
+	public List<Cart> findByUserId(String userId) throws Exception{
 		List<Cart> cartList=new ArrayList<Cart>();
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
 		con=dataSource.getConnection();
+		/*
+		select c.*,p.* from cart c join product p on c.p_no=p.p_no where userid='guard1'
+		
+		CART_NO   CART_QTY  USERID    	P_NO 	P_NAME      P_PRICE    	P_IMAGE          P_DESC                                                                                                P_DESC                                                                                                                                                                                                   P_CLICK_COUNT
+		---------- ---------- --------------------------------------------------------------------------
+		   	8			1	guard1		5		포메라니안	800000		pomeranian.jpg	 기타 상세 정보 등...	
+			9			1	guard1		8		사모예드	800000		samoyed.jpg		 기타 상세 정보 등...	0
+			7			1	guard1		6		샤페이		700000		shaipei.jpg	  	 기타 상세 정보 등...	0
+		*/   
 		pstmt=con.prepareStatement(CartSQL.CART_SELECT_BY_USERID);
-		//select * from cart c join product p on c.p_no=p.p_no where userid='guard1'; 
-		pstmt.setString(1, sUserId);
+		pstmt.setString(1, userId);
 		rs=pstmt.executeQuery();
 		while(rs.next()) {
-			cartList.add(new Cart(rs.getInt("cart_no"),
-								  rs.getInt("cart_qty"), 
-								  rs.getString("userid"), 
-								  new Product(rs.getInt("p_no"),
-										      rs.getString("p_name"),
-										      rs.getInt("p_price"),
-										      rs.getString("p_image"),
-										      rs.getString("p_desc"),
-										      rs.getInt("p_click_count")
-										      )
-								  )
-						);
+			cartList.add(new Cart( rs.getInt("cart_no"),
+							       rs.getInt("cart_qty"),
+							       rs.getString("userid"),
+							       new Product(rs.getInt("p_no"),
+							    		       rs.getString("p_name"),
+							    		       rs.getInt("p_price"),
+							    		       rs.getString("p_image"),
+							    		       rs.getString("p_desc"), 
+							    		       rs.getInt("p_click_count"))
+								 )
+					);
 		}
 		
 		

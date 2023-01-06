@@ -1,4 +1,4 @@
-package com.itwill.shop.test;
+package test;
 
 import com.itwill.shop.user.User;
 import com.itwill.shop.user.UserDao;

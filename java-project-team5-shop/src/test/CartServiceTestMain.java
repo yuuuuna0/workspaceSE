@@ -11,11 +11,11 @@ public class CartServiceTestMain {
 
 	public static void main(String[] args)throws Exception {
 		CartService cartService=new CartService();
-		/*
 		System.out.println("1.add");
 		int rowCount=cartService.addCart("guard1",8,1);
 		System.out.println(">>"+rowCount);
 		
+		/*
 		System.out.println("2.update");
 		rowCount=cartService.updateCart(3,3);
 		System.out.println(">>"+rowCount);

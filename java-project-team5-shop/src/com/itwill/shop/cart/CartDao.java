@@ -254,7 +254,7 @@ public class CartDao {
 		rs=pstmt.executeQuery();
 		if(rs.next()) {
 			cart=new Cart(rs.getInt("cart_no"),
-						rs.getInt("cart_qty"),
+						 rs.getInt("cart_qty"),
 						 rs.getString("userId"),
 						 new Product(rs.getInt("p_no"),
 								rs.getString("p_name"),

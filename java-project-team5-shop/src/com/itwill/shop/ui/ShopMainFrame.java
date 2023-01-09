@@ -77,8 +77,14 @@ public class ShopMainFrame extends JFrame {
 		JTabbedPane productTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		shopTabbedPane.addTab("제품", null, productTabbedPane, null);
 		
+		PopularProductPanel popularProductPanel = new PopularProductPanel();
+		productTabbedPane.addTab("New tab", null, popularProductPanel, null);
+		
 		JTabbedPane MemberTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		shopTabbedPane.addTab("회원", null, MemberTabbedPane, null);
+		
+		MemberJoinPanel memberJoinPanel = new MemberJoinPanel();
+		MemberTabbedPane.addTab("New tab", null, memberJoinPanel, null);
 		
 	}
 }

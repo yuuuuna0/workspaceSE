@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
+import javax.swing.JTabbedPane;
 
 public class ShopMainFrame extends JFrame {
 
@@ -44,11 +45,6 @@ public class ShopMainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel globalNorthMenuPanel = new JPanel();
-		globalNorthMenuPanel.setBackground(new Color(250, 240, 230));
-		contentPane.add(globalNorthMenuPanel, BorderLayout.NORTH);
-		globalNorthMenuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
 		JPanel globalSouthMenuPanel = new JPanel();
 		globalSouthMenuPanel.setBackground(new Color(250, 250, 210));
 		contentPane.add(globalSouthMenuPanel, BorderLayout.SOUTH);
@@ -74,6 +70,15 @@ public class ShopMainFrame extends JFrame {
 		globalMemberMenuBtn.setOpaque(false);
 		globalMemberMenuBtn.setIcon(new ImageIcon(ShopMainFrame.class.getResource("/images/user.png")));
 		globalSouthMenuPanel.add(globalMemberMenuBtn);
+		
+		JTabbedPane shopTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		contentPane.add(shopTabbedPane, BorderLayout.CENTER);
+		
+		JTabbedPane productTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		shopTabbedPane.addTab("제품", null, productTabbedPane, null);
+		
+		JTabbedPane MemberTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		shopTabbedPane.addTab("회원", null, MemberTabbedPane, null);
 		
 	}
 }

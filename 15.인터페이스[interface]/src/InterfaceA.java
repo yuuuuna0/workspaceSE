@@ -5,7 +5,7 @@
        (클래스는 불가능하나 인터페이스는가능하다)
    -형식
      * class keyword 대신에 interface 라는 keyword를사용
-     * 추상메쏘드앞에 abstract 를 붙히지않는다.
+     * 추상메쏘드앞에 abstract 를 붙이지않는다.
      ex>public interface Test{
      		public void method1();
      		public void method2();
